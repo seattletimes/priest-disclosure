@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+  <head>
+    <title><%= json.project.title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <%= t.include("partials/_head.html") %>
+    <style>
+      [ng-cloak] {
+      display: none;
+      }
+    </style>
+  </head>
+  <body ng-app="priest-table">
+
+    <responsive-child>
+      <div ng-controller="PriestController" class="outer" ng-cloak>
+
+        <div class="search">
+          <i class="fa fa-search"></i> Search by assignment: <input type="text" ng-change="search()" ng-model="searchText">
+        </div>
+
+        <div>
+          <table>
+          <tr>
+            <th>Name
+            <th>Status
+            <th>Assignment(s)
+
+          <tr ng-show="shown.length == 0">
+            <td colspan=100><em>No results found</em>
+   
+          <tr ng-repeat="priest in shown">
+            <td>{{priest.Name}}
+            <td>{{priest.Status}}
+            <td class="tiny">{{priest.Assignments}}
+          </tr>
+
+          <tr class="white">
+            <td colspan="3"><div class="button" ng-show="!expanded && !searched" ng-click="expand()"><i class="fa fa-angle-double-down"></i> SEE MORE</div>
+          <tr class="white">
+            <td colspan="3"><div class="button" ng-show="expanded && !searched" ng-click="hide()"><i class="fa fa-angle-double-up"></i> SEE LESS</div></tr>
+          <tr class="white">
+            <td colspan="3"><div class="button" ng-show="searched" ng-click="hide()"><i class="fa fa-angle-double-left"></i> CLEAR SEARCH</div>
+        </table>
+        
+      </div>
+
+        <div class="source"><em>Source: Archdiocese of Seattle</em></div>
+        <div class="credit">AUDREY CARLSEN / THE SEATTLE TIMES</div>
+      </div>
+    </responsive-child>
+
+    <script>
+      var priestData = <%= JSON.stringify(json.SeattleArchdioceseDisclosureList011516_CommaSeparated) %>
+    </script>
+
+    <script src="app.js" async></script>
+    <% if (json.project.production) { %>
+    <%= !json.project.embedded ? t.include("partials/_foot.html") : "" %>
+    <%= t.include("partials/_workHere.html") %>
+    <% } %>
+  </body>
+</html>

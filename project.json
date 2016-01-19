@@ -1,0 +1,22 @@
+{
+  "s3": {
+    "stage": {
+      "bucket": "",
+      "path": ""
+    },
+    "live": {
+      "bucket": "projects.seattletimes.com",
+      "path": "2016/local/priest-table"
+    }
+  },
+  "title": "",
+  "description": "",
+  "url": "",
+  "slug": "",
+  "tags": [],
+  "image": "assets/social.jpg",
+  "sheets": [],
+  "production": true,
+  "embedded": true,
+  "sheets": ["1Q6YAqzjUTd8XO8VQMtusCOdf86HIFCNBrcd2fm77Lcc"]
+}
