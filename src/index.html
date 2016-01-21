@@ -33,9 +33,12 @@
             <td colspan=100><em>No results found</em>
    
           <tr ng-repeat="priest in shown">
-            <td>{{priest.Name}}
-            <td>{{priest.Status}}
-            <td class="tiny">{{priest.Assignments}}
+            <td class="name">
+              <div>{{priest.name}}</div>
+              <div class="tiny">{{priest.diocese}}</div>
+            <td class="status">{{priest.status}}
+            <td class="assignments">
+              <div ng-repeat="assignment in priest.assignments">{{assignment}}</div>
           </tr>
 
           <tr class="white">
@@ -54,7 +57,19 @@
     </responsive-child>
 
     <script>
-      var priestData = <%= JSON.stringify(json.SeattleArchdioceseDisclosureList011516_CommaSeparated) %>
+    <%
+      var data = [];
+      json.SeattleArchdioceseDisclosureList011516_CommaSeparated.forEach(function(row) {
+        var assignments = row.Assignments.split("\n");
+        data.push({
+          name: row.Name,
+          status: row.Status,
+          diocese: row.Diocese,
+          assignments: assignments
+        });
+      });
+    %>
+      var priestData = <%= JSON.stringify(data) %>
     </script>
 
     <script src="app.js" async></script>

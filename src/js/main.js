@@ -9,7 +9,7 @@ var app = angular.module("priest-table", []);
 
 app.controller("PriestController", ["$scope", function($scope) {
   $scope.all = priestData.sort(function(a,b) {
-    if (a.Name > b.Name) {
+    if (a.name > b.name) {
       return 1
     } else {
       return -1
@@ -19,14 +19,14 @@ app.controller("PriestController", ["$scope", function($scope) {
   $scope.expanded = false;
   $scope.searched = false;
 
-  $scope.shown = $scope.all.slice(0,10);
+  $scope.shown = $scope.all.slice(0,5);
 
   $scope.expand = function() {
     $scope.shown = $scope.all;
     $scope.expanded = true;
   };
   $scope.hide = function() {
-    $scope.shown = $scope.all.slice(0,10);
+    $scope.shown = $scope.all.slice(0,5);
     $scope.expanded = false;
     $scope.searched = false;
     $scope.searchText = "";
@@ -35,13 +35,17 @@ app.controller("PriestController", ["$scope", function($scope) {
   $scope.search = debounce(function() {
     var value = $scope.searchText;
     if (!value) {
-      $scope.shown = $scope.all.slice(0,10);
+      $scope.shown = $scope.all.slice(0,5);
       $scope.expanded = false;
       $scope.searched = false;
     } else {
       value = value.toLowerCase();
       var filtered = $scope.all.filter(function(item) {
-        return item.Assignments.toLowerCase().indexOf(value) > -1;
+        var match = false;
+        item.assignments.forEach(function(a) {
+          if (a.toLowerCase().indexOf(value) > -1) match = true;
+        })
+        return match;
       });
       $scope.shown = filtered.slice(0,50);
       $scope.searched = true;
